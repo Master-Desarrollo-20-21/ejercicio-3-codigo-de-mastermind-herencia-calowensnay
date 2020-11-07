@@ -12,39 +12,44 @@ public class Game {
 	}
 
 	public void play() {
-
+		Console console = new Console();
+		console.out("----- MASTERMIND -----\n");
 		do {
-			Console console = new Console();
-			console.out(attempsCantity + " " + "attempt(s):\n");
-			secretCombination.show();
-			console.out("\nPropose a combination: ");
-			String combination = console.inString();
-			Color[] sequence = new Color[6];
-			for (int i = 0; i < 6; i++) {
-				sequence[i] = Combination.toColor(combination.charAt(i));
-			}
-			ProposedCombination proposedCombination = new ProposedCombination(sequence);
-			
-//			for (int i = 0;i<MAX_ATTEMPS;i++) {
-//				
-//			}
-			
-			attemps[attempsCantity] = new Attemp(attempsCantity);
-			attemps[attempsCantity].setProposedCombination(proposedCombination);
-
+			showState();
+			Attemp attemp = new Attemp(secretCombination);
+			attemp.play();
+			attemps[attempsCantity] = attemp;
 			attempsCantity++;
-		} while (this.isWinner() || this.isLooser());
+		} while (!isWinner() && !isLooser());
+		showResult();
+	}
 
+	private void showResult() {
+		Console console = new Console();
+		showState();
+		if (this.isWinner()) {
+			console.out("\nYou've won!!! ;-) \n");
+		}else {
+			console.out("\nYou've lost!!! ;-) \n");
+		}
+		
+	}
+
+	private void showState() {
+		Console console = new Console();
+		console.out("\n"+attempsCantity+" "+"attemp(s):\n");
+		secretCombination.show();
+		for (int i = 0;i<attempsCantity;i++) {
+			attemps[i].show();
+		}
 	}
 
 	private boolean isLooser() {
-
 		return attempsCantity == MAX_ATTEMPS;
 	}
 
 	private boolean isWinner() {
-
-		return secretCombination.isCorrect(attemps[attempsCantity - 1].getProposedCombination());
+		return attemps[attempsCantity - 1].isCorrect();
 	}
 
 }

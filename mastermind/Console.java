@@ -162,4 +162,9 @@ public class Console {
 		out(string);
 		return inChar();
 	}
+
+	public String inString(String string) {
+		out(string);
+		return inString();
+	}
 }

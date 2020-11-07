@@ -4,29 +4,24 @@ public class Mastermind {
 
 	private Game game;
 	
-	public Mastermind() {
-		this.game = new Game();
-	}
-
 	private void play() {
 		do {
-			this.game.play();
+			this.game = new Game();
+			game.play();
 		} while (isResumed());
-
 	}
 
 	private boolean isResumed() {
 		char answer;
 		Console console = new Console();
 		do {
-			answer = console.inChar("RESUME? (y/n): ");
-		} while (answer != 's' && answer != 'n');
-		return answer == 's';
+			answer = console.inChar("RESUME? (Y/N): ");
+		} while (answer != 'Y' && answer != 'N');
+		return answer == 'Y';
 	}
 
 	public static void main(String[] args) {
 		new Mastermind().play();
-
 	}
 
 }

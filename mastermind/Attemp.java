@@ -3,24 +3,30 @@ package mastermind;
 public class Attemp {
 
 	private ProposedCombination proposedCombination;
-	private int attempNumber;
+	private SecretCombination secretCombination;
+	private int blacksCantity;
+	private int whitesCantity;
+
 	
-	public Attemp(int attempNumber) {
-		this.attempNumber = attempNumber;
+	public Attemp(SecretCombination secretCombination) {
+		this.secretCombination = secretCombination;
 	}
 
-	public ProposedCombination getProposedCombination() {
+	public void  play() {
+		proposedCombination =  new ProposedCombination();
+		blacksCantity =secretCombination.evaluateBlacks(proposedCombination);
+		whitesCantity = secretCombination.evaluateWhites(proposedCombination);
+	}
+	
+	public void show() {
+		Console console = new Console();
+		console.out("\n");
+		proposedCombination.show();
+		console.out(" --> "+blacksCantity +" blaks "+whitesCantity+ " whites");
 		
-		return proposedCombination;
 	}
 
-	public void proposeCombination() {
-		
-		setProposedCombination(new ProposedCombination());
+	public boolean isCorrect() {
+		return blacksCantity == 4;
 	}
-
-	public void setProposedCombination(ProposedCombination proposedCombination) {
-		this.proposedCombination = proposedCombination;
-	}
-
 }
